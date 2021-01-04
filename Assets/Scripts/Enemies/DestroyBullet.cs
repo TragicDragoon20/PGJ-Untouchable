@@ -7,6 +7,19 @@ public class DestroyBullet : MonoBehaviour
     private float trailTimer = 0f;
     [SerializeField]
     private float playerForce = 0f;
+
+    private TrailRenderer trailRenderer;
+
+    private ObjectPooler objectPooler;
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = this.GetComponent<Rigidbody>();
+        objectPooler = ObjectPooler.Instance;
+        trailRenderer = this.GetComponent<TrailRenderer>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -15,12 +28,8 @@ public class DestroyBullet : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody>().AddForce(this.transform.forward * playerForce);
             KillPlayer(collision.gameObject);
         }
-        Destroy(this.gameObject);
-    }
-
-    private void Update()
-    {
-        Destroy(this.GetComponent<TrailRenderer>(), trailTimer);
+        rb.velocity = Vector3.zero;
+        objectPooler.ReturnObject(this.gameObject);
     }
 
     private void KillPlayer(GameObject player)

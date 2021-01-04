@@ -197,6 +197,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 12cb4045a600767449809a033885596b, type: 3}
   - {fileID: 8300000, guid: 676ab5212372f6f45a098e98ba574754, type: 3}
   - {fileID: 8300000, guid: db2dade81092fa84ea4510b817ef8aaf, type: 3}
+  objectPooler: {fileID: 2530664518762383553, guid: d13d0d77c9d92f543b331f0568c2248d,
+    type: 3}
 --- !u!54 &1354246667638578923
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -40,6 +40,8 @@ public class EnemyAI : MonoBehaviour
     protected EnemyState state;
     [SerializeField]
     protected int id = 0;
+    protected ObjectPooler objectPooler;
+
 
     protected enum EnemyState 
     {
@@ -58,6 +60,13 @@ public class EnemyAI : MonoBehaviour
         {
             GameEvents.current.OnEnemyTriggerEnter += ChangeState;
         }
+        objectPooler = ObjectPooler.Instance;
+        if (objectPooler == null)
+        {
+            Debug.Log(gameObject.transform.parent.name);
+        }
+        Debug.Log(objectPooler);
+
     }
 
     private void Update()

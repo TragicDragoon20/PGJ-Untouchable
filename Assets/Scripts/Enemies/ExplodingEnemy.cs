@@ -10,14 +10,20 @@ public class ExplodingEnemy : EnemyAI
     [SerializeField]
     private GameObject explosion = null;
 
+    private Vector3 playerPos;
+    private Vector3 thisPos;
+
     protected override void Exploding()
     {
-        Vector3 direction = player.transform.position - this.transform.position;
+        playerPos = player.transform.position; 
+        thisPos = this.transform.position;
+
+        Vector3 direction = playerPos - thisPos;
         direction.y = 0f;
 
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
-        playerDist = this.transform.position - player.transform.position;
+        playerDist = thisPos - playerPos;
         playerDist.y = 0f;
 
         if (direction.magnitude > .8)
@@ -31,8 +37,8 @@ public class ExplodingEnemy : EnemyAI
         }
         if (playerDist.magnitude < range)
         {
-            GameObject explosive = Instantiate(explosion, this.transform.position, this.transform.rotation);
-            player.GetComponent<Rigidbody>().AddExplosionForce(explosiveForce, this.transform.position, explosiveRadius);
+            GameObject explosive = Instantiate(explosion, thisPos, this.transform.rotation);
+            player.GetComponent<Rigidbody>().AddExplosionForce(explosiveForce, thisPos, explosiveRadius);
             Destroy(this.gameObject);
             Destroy(player);
         }

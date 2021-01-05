@@ -8,8 +8,6 @@ public class DestroyBullet : MonoBehaviour
     [SerializeField]
     private float playerForce = 0f;
 
-    private TrailRenderer trailRenderer;
-
     private ObjectPooler objectPooler;
     private Rigidbody rb;
 
@@ -17,7 +15,6 @@ public class DestroyBullet : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         objectPooler = ObjectPooler.Instance;
-        trailRenderer = this.GetComponent<TrailRenderer>();
     }
 
     private void OnCollisionEnter(Collision collision)

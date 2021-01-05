@@ -16,20 +16,23 @@ public class ShootingEnemy : EnemyAI
     private float bulletTimer = 0f;
     [SerializeField]
     private AudioClip[] gunShots = null;
+    private Vector3 playerPos;
+    private Vector3 thisPos;
 
 
     protected override void Tartgeting()
     {
         if (player != null)
         {
+            playerPos = player.transform.position;
+            thisPos = this.transform.position;
 
-
-            playerDist = this.transform.position - player.transform.position;
+            playerDist = thisPos - playerPos;
             playerDist.y = 0f;
 
             if (playerDist.magnitude < range)
             {
-                Vector3 direction = player.transform.position - this.transform.position;
+                Vector3 direction = playerPos - thisPos;
                 direction.y = 0f;
 
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
@@ -37,7 +40,7 @@ public class ShootingEnemy : EnemyAI
                 if (Time.time > nextFire)
                 {
                     audioSource.PlayOneShot(gunShots[Random.Range(0, gunShots.Length)]);
-                    Vector3 shootDirection = player.transform.position + Random.insideUnitSphere * errorMargin - bulletSpawn.position;
+                    Vector3 shootDirection = playerPos + Random.insideUnitSphere * errorMargin - bulletSpawn.position;
                     nextFire = Time.time + fireRate;
                     GameObject bullet = objectPooler.GetPooledObject();
                     Debug.Log(bullet);

@@ -51,6 +51,8 @@ public class ObjectPooler : MonoBehaviour
         pooledObjectTransform.parent = transform;
         pooledObjectTransform.localPosition = Vector3.zero;
         poolObject.gameObject.SetActive(false);
+        freePooledObjects.Add(poolObject);
+
 
     }
 }
